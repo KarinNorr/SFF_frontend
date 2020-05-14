@@ -1,0 +1,33 @@
+body{
+    background-color:rgb(214, 58, 136) ;
+    margin: 0px;
+    padding: 0px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.header{
+    background-color:rgb(179, 18, 98);
+    height: 100px;
+    color:white;
+    font-size: 30px;
+    padding: 20 px;
+    text-align:center;
+}
+
+.login{
+    background-color:rgb(214, 58, 136);
+    color: white;
+    font-size: 15px;
+    padding: 20px;
+    height: auto;
+}
+.space{
+    height: 40px;
+}
+
+.register{
+    height: auto;
+    background-color:rgb(233, 129, 181);
+    padding: 20px;
+    color: white;
+}
