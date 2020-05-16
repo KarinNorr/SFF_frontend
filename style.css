@@ -13,11 +13,29 @@ body{
     padding: 20 px;
     text-align:center;
 }
+footer{
+    background-color: rgb(233, 129, 181);
+    height: 200px;
+    color:white;
+    font-size: 30px;
+    padding: 20 px;
+    position: flexible; 
+    bottom: 0px;
+    left: 0px;
+    width: 100%;
+}
 
 .login{
     background-color:rgb(214, 58, 136);
     color: white;
     font-size: 15px;
+    padding: 20px;
+    height: auto;
+}
+.movielist{
+    background-color:rgb(214, 58, 136);
+    color: white;
+    font-size: 15 px;
     padding: 20px;
     height: auto;
 }
