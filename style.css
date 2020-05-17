@@ -49,3 +49,12 @@ footer{
     padding: 20px;
     color: white;
 }
+
+.movieButton
+{
+    height: 40px;
+    width: auto;
+    background-color:rgb(233, 129, 181);
+    font-size: 20px;
+    color: white;
+}

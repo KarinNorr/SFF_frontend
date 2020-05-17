@@ -15,7 +15,7 @@ fetch('https://localhost:5001/api/film')
     //hämtar alla filmer och sätter igång en lista
     fetch('https://localhost:5001/api/film')
     .then(response => response.json())
-    .then(data => buildListOfMovies(data));
+    .then(data => buildButtonsOfMovies(data));
 
     
     //listar filmer på startsidan
@@ -26,11 +26,28 @@ function buildListOfMovies(Movies)
     
     Movies.forEach(Movie => {
         var newDiv = document.createElement("div");
-        newDiv.className = "addedDiv";
-        newDiv.textContent = "FilmId: " + Movie.id + " Titel: " + Movie.name + " Mer info här!"; 
+        newDiv.className = "movielist";
+        newDiv.textContent = "FilmId: " + Movie.id + " Titel: " + Movie.name; 
+       
 
         var containerDiv = document.getElementById("listOfMovies");
         containerDiv.appendChild(newDiv);
+    });
+}
+
+//knappar
+function buildButtonsOfMovies(Movies)
+{
+    //göra om för att återanvända listfunktionen
+    document.getElementById("listOfMovies").innerHTML = "";
+    
+    Movies.forEach(Movie => {
+        var newButton = document.createElement("button");
+        newButton.className = "movieButton";
+        newButton.textContent = Movie.name; 
+       
+        var containerDiv = document.getElementById("listOfMovies");
+        containerDiv.appendChild(newButton);
     });
 }
 
