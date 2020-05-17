@@ -106,13 +106,14 @@ function addNewMovie(name, stock)
 function addNewStudio(name, password)
 {
     var data = { name: name, password: password}
-    fetch('https://localhost:5001/api/filmstudio'), {
+    console.log("Startar metod addNewStudio")
+    fetch('https://localhost:5001/api/filmstudio', {
         method: 'POST',
         headers: { 
             'Content-Type': 'application/json', 
         },
         body: JSON.stringify(data),
-    }
+    })
     .then(response => response.json())
         .then(data => {
             console.log('sucsess:', data);
