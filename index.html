@@ -9,7 +9,7 @@
 <body>
     <div class="header"> <br>VÄKOMMEN TILL SVERIGES FÖRENADE FILMSTUDIOS </div>
     
-    <script src="script.js"></script>
+    
 
     <div class="space"></div>
     <div class="movielist" id="listOfMovies">FILMER!</div>
@@ -17,14 +17,14 @@
         <br>
         Namn: <input type="text">
         Lösenord: <input type="text">
-        <button>Logga in!</button>
+        <button id="studioLogin">Logga in!</button>
 
     </div>
     <div class="login" id="adminLogin"> Admin login!
         <br>
         Namn: <input type="text">
         Lösenord: <input type="text">
-        <button>Logga in!</button>
+        <button id="adminLogin">Logga in!</button>
          </div>
     
 
@@ -34,16 +34,16 @@
         enkelt beställer hem här på denna sida.
         <br>
         <br> Registera din filmstudio här nedan! 
-        <br> Namn: <input type="text">
-        Välj ett lösenord: <input type="text">
-        <button>Gå med!</button>
+        <br> Namn: <input type="text" id="studioName">
+        Välj ett lösenord: <input type="text" id="studioPassword">
+        <button id="addStudio">Gå med!</button>
         <br> Fyll i nedanstående kontaktuppgifter:
         <br> Kontaktperson: <input type="text">
         Telefonnummer: <input type="text">
         
     </div>
     
-
+    <script src="script.js"></script>
     
     
 </body>

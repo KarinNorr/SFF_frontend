@@ -1,3 +1,14 @@
+var saveMoviebutton = document.getElementById("");
+var saveRentedMovieButton = document.getElementById("");
+var addNewStudioButton = document.getElementById("addStudio");
+
+addNewStudioButton.addEventListener("click", function(){
+    studioName = document.getElementById("studioName").value; 
+    studioPassword = document.getElementById("studioPassword").value;
+    addNewStudio(studioName, studioPassword);
+});
+
+
 fetch('https://localhost:5001/api/film')
     .then(function (response){
         return response.json()
@@ -36,6 +47,7 @@ function buildListOfMovies(Movies)
 }
 
 //knappar
+//addera eventlistener så att man kan klicka vidare
 function buildButtonsOfMovies(Movies)
 {
     //göra om för att återanvända listfunktionen
@@ -84,9 +96,26 @@ function addNewMovie(name, stock)
     fetch('https://localhost:5001/api/film'), {
         headers: { 'Content-Type': 'application/json',
         method: 'POST',
-        body: JSON.stringify({
+        body: JSON.stringify(
           data
-        })
+        )
         .then(response => response.json())}
     }
 }
+
+function addNewStudio(name, password)
+{
+    var data = { name: name, password: password}
+    fetch('https://localhost:5001/api/filmstudio'), {
+        method: 'POST',
+        headers: { 
+            'Content-Type': 'application/json', 
+        },
+        body: JSON.stringify(data),
+    }
+    .then(response => response.json())
+        .then(data => {
+            console.log('sucsess:', data);
+        })
+    };
+
