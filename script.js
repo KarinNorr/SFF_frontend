@@ -1,6 +1,18 @@
 var saveMoviebutton = document.getElementById("");
 var saveRentedMovieButton = document.getElementById("");
 var addNewStudioButton = document.getElementById("addStudio");
+var movieList = document.getElementById("listOfMovies");
+
+movieList.addEventListener("click", function(movie){
+    document.getElementById("listOfMovies").innerHTML ="Filminfo";
+    var movieId = movie.target.id;
+    document.getElementById("listOfMovies").innerHTML="Du tryckte på id: " +movieId;
+    if (movieId !== "listOfMovies")
+    {
+        fetchTriviaOfMovie(movieId);
+    }
+    
+});
 
 addNewStudioButton.addEventListener("click", function(){
     studioName = document.getElementById("studioName").value; 
@@ -39,7 +51,6 @@ function buildListOfMovies(Movies)
         var newDiv = document.createElement("div");
         newDiv.className = "movielist";
         newDiv.textContent = "FilmId: " + Movie.id + " Titel: " + Movie.name; 
-       
 
         var containerDiv = document.getElementById("listOfMovies");
         containerDiv.appendChild(newDiv);
@@ -57,20 +68,51 @@ function buildButtonsOfMovies(Movies)
         var newButton = document.createElement("button");
         newButton.className = "movieButton";
         newButton.textContent = Movie.name; 
+        newButton.id = Movie.id;
+        newButton.onclick = {
+            
+            //hämta triva med samma movieid
+            //
+        }
        
         var containerDiv = document.getElementById("listOfMovies");
         containerDiv.appendChild(newButton);
     });
 }
-
-function buildListOfTriva(id)
+function buildListOfMovies(Movies)
 {
+    //göra om för att återanvända listfunktionen
+    document.getElementById("listOfMovies").innerHTML = "Följande filmer finns tillgängliga...";
+    
+    Movies.forEach(Movie => {
+        var newDiv = document.createElement("div");
+        newDiv.className = "movielist";
+        newDiv.textContent = "FilmId: " + Movie.id + " Titel: " + Movie.name; 
+       
+
+        var containerDiv = document.getElementById("listOfMovies");
+        containerDiv.appendChild(newDiv);
+    });
+}
+
+function buildListOfTriva(trivia)
+{
+    document.getElementById("listOfMovies")
     //lägga in inpufält att välja vilken filmId man ska
     //visa upp 
     //se mer av 
     //fetch trivia med specifikt id
     //visar i diven 
     //visar också bild i divven 
+}
+
+function fetchTriviaOfMovie(movieId)
+{
+    fetch('https://localhost:5001/api/filmtrivia')
+    .then(response => response.json())
+    .then(json => json.filter(trivia => trivia.filmId = movieId))
+    .then(data => buildListOfTriva(data));
+    console.log("Hämtar trivia");
 }
 
 function welcomeStudio()
