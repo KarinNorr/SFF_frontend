@@ -41,9 +41,9 @@ fetch('https://localhost:5001/api/film')
     .then(data => buildButtonsOfMovies(data));
 
 
-    // ------------ MOVIE: --------------------------
+// ------------ MOVIE: --------------------------
 
-    function showListOfMovies() {
+function showListOfMovies() {
     document.getElementById("listOfMovies").innerHTML = "";
     fetch('https://localhost:5001/api/film')
         .then(response => response.json())
@@ -74,8 +74,11 @@ function buildButtonsOfMovies(Movies) {
     Movies.forEach(Movie => {
         var newButton = document.createElement("button");
         newButton.className = "movieButton";
-        newButton.textContent = Movie.name;
         newButton.id = Movie.id;
+        newButton.textContent = Movie.id + ") " + Movie.name;
+
+        
+        
 
         // showListOfMovies();
         var containerDiv = document.getElementById("listOfMovies");
@@ -94,8 +97,11 @@ function buildListOfTriva(Trivias) {
             newDiv.className = "movieList";
             newDiv.textContent = "TRIVIA: " + Trivia.trivia;
 
+            var newPicture = document.createElement("picture");
+            newPicture;
+
             var containerDiv = document.getElementById("listOfMovies");
-            containerDiv.appendChild(newDiv);
+            containerDiv.appendChild(newDiv, newPicture);
         });
 
     }
@@ -129,7 +135,7 @@ function fetchTriviaOfMovie(movieId) {
 
 // ------------ STUDIO: --------------------------
 
-var studioLoginPage = document.getElementById("studioLogin");
+var studioLoginPage = document.getElementById("content");
 if (localStorage.getItem("userId") !== "null") {
     //welcomeStudio();
 }
@@ -137,8 +143,10 @@ else {
     showStudioLogin();
 }
 
-
+//variabel för att hålla koll på inloggad studio
+var studioId; 
 var loginButton = document.getElementById("studioLogin");
+
 loginButton.addEventListener("click", function () {
     console.log("Knapp!");
 
@@ -153,18 +161,16 @@ loginButton.addEventListener("click", function () {
         .then(function (json) {
             console.log(json);
 
-            for (i = 0; i < json.length; i++) 
-            {
-                if (getUser == json[i].name && userPassword == json[i].password) 
-                    {
+            for (i = 0; i < json.length; i++) {
+                if (getUser == json[i].name && userPassword == json[i].password) {
                     console.log("Ja det stämmer");
-
                     localStorage.setItem("userId", i);
                     localStorage.setItem("userId", getUser);
                     console.log(localStorage.getItem("userId"));
-                    studioLoginPage.innerHTML = "";
-                    studioLoginPage.innerHTML = "Hej och välkommen " + getUser;
+                    // studioLoginPage.innerHTML = "";
+                    // studioLoginPage.innerHTML = "Hej och välkommen " + getUser;
 
+                    studioId = studio.id;
                     welcomeStudio();
                 }
                 else {
@@ -177,18 +183,51 @@ loginButton.addEventListener("click", function () {
 
 
     function welcomeStudio() {
-        //Hälsar välkommen
-        //studioLoginPage.innerHTML = "Hej och välkommen " + getUser;
-        //Inputfält + knapp för att låna film 
+        console.log("velcomeStudio");
+        console.log(localStorage.getItem("userId"));
+
+        studioLoginPage.innerHTML = "Hej och välkommen " + getUser + " Vilken film vill du låna?"; 
+        studioLoginPage.insertAdjacentHTML("beforeend", "<div><input type='text' id='movieInput'></input><Button id='rentButton'>Låna!</Button></div>");
+        var movieId = document.getElementById("movieInput").value;
+        
+        var rentButton = document.getElementById("rentButton");
+        rentButton.addEventListener("click", function() {
+            console.log("FilmId: " + movieId);
+            console.log("StudioId: " + studioId);
+            addRentedMovie(movieId,studioId);
+        });
+        studioLoginPage.insertAdjacentHTML("beforeend", "<div>Skriv in din Triva här:</input></div>");
+        studioLoginPage.insertAdjacentHTML("beforeend", "<div><input type='text' id='triviaInput'></input><Button id='inputTrivia'>Skicka in!</Button></div>");
+        studioLoginPage.insertAdjacentHTML("beforeend", "<div>Lämna tillbaks film nedan:</input></div>");
+        studioLoginPage.insertAdjacentHTML("beforeend", "<div><input type='text' id='triviaInput'></input><Button id='returnMovie'>Lämna tillbaks!</Button></div>");
+
+        
+        
+
+        let triviaButton = document.getElementById("inputTrivia");
+        triviaButton.addEventListener("click", function() {
+            let triviaText = document.getElementById("triviaInput").value;
+            console.log("eventlistener triviaButton");
+            console.log(triviaText);
+            addTrivia(filmId, text);
+        })
         //Button med eventlistener som startar:
         //addRentedMovie(MovieId)
 
         //knapp för att logga ut
+        //logOutStudio();
+    }
+
+    function logOutStudio() {
+        console.log("logOutStudio");
         studioLoginPage.insertAdjacentHTML("beforeend", "<div><Button id='logoutButton'>Logga ut!</Button></div>");
 
         var logoutButton = document.getElementById("logoutButton");
 
+        //obs att kolla denna eventlistener
         logoutButton.addEventListener("click", function () {
+            //variablen "userId" finns bara lokalt ifunktion ovanför
+            console.log(localStorage.getItem("userId"));
             localStorage.removeItem("userId");
             //showLoginPage();
             //vy att visa?
@@ -201,7 +240,7 @@ loginButton.addEventListener("click", function () {
     }
 
     function addRentedMovie(movieId, studioId) {
-        var data = { FilmId: movieId, StudioId: studioId };
+        var data = { filmId: movieId, studioId: studioId };
         fetch('https://localhost:5001/api/rentedfilm'), {
             headers: {
                 'Content-Type': 'application/json',
@@ -216,6 +255,24 @@ loginButton.addEventListener("click", function () {
             }
         }
 
+    }
+
+    function addTrivia(filmid, text)
+    {
+        var data = { filmid: filmid, trivia: text };
+        fetch('https://localhost:5001/api/filmtrivia'),{
+            headers: {
+                'Content-Type': 'application/json',
+                method: 'POST',
+                body: JSON.stringify(
+                    data
+                )
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log('sucsess:', data);
+                    })
+            }
+        }
     }
 
 
