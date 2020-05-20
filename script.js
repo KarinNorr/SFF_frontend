@@ -81,8 +81,6 @@ function buildButtonsOfMovies(Movies) {
         newButton.id = Movie.id;
         newButton.textContent = Movie.id + ") " + Movie.name;
 
-
-        // showListOfMovies();
         var containerDiv = document.getElementById("listOfMovies");
         containerDiv.appendChild(newButton);
     });
@@ -93,28 +91,34 @@ function buildListOfTriva(Trivias) {
 
     //lägga till en insertadjacenthtml med en placeholder för bild
 
+
     if (Trivias !== null) {
+        showPicture()
         Trivias.forEach(Trivia => {
+
+            // var picture = '<img src="jpg/film-camera.jpg"></img>';
+            // var pictureContainer = document.createElement("div");
+            // pictureContainer.innerHTML = picture;
+
             var newDiv = document.createElement("div");
             newDiv.className = "movieList";
             newDiv.textContent = "TRIVIA: " + Trivia.trivia;
-
-            var newPicture = document.createElement("picture");
-            newPicture;
-
+            //newDiv.innerHTML = picture;
             var containerDiv = document.getElementById("listOfMovies");
-            containerDiv.appendChild(newDiv, newPicture);
+            containerDiv.appendChild(newDiv);
+            
         });
-
     }
     else {
         document.getElementById("listOfMovies").innerHTML = "Den här filmen har ingen trivia";
 
     }
+    //newDiv.insertAdjacentElement("beforeend", "<div><img src='jpg/film-camera.jpg'></div>");
     getMoviesBack();
 }
 
 //för att komma tillbaks till filmerna
+//kolla igenom
 function getMoviesBack() {
 
     var startPage = document.getElementById("listOfMovies");
@@ -125,6 +129,11 @@ function getMoviesBack() {
         showListOfMovies();
     });
 
+}
+
+function showPicture()
+{
+    movieList.insertAdjacentHTML("beforeend", "<div><img class='picture' src='jpg/film-camera.jpg'></img></div>");
 }
 
 
@@ -180,7 +189,6 @@ loginButton.addEventListener("click", function () {
             if (isLoggedin == false) { showErrorLoginPage(); }
 
         });
-
 
 
     function welcomeStudio() {
@@ -256,9 +264,6 @@ loginButton.addEventListener("click", function () {
             body: JSON.stringify(data),
         })
             .then(response => response.json())
-            // .then(function (json) {
-            //     rentedId = json[i].id;
-            //  }
             .then(data => showRentedMovie(data))
             .then(data => {
                 console.log('sucsess:', data);
@@ -291,7 +296,7 @@ loginButton.addEventListener("click", function () {
     }
 
     function showReturnedMovie() {
-        
+
         //tacka för att filmen lämnats tillbaks
     }
     function showRentedMovie(rentedMovie) {
@@ -299,10 +304,6 @@ loginButton.addEventListener("click", function () {
         console.log("Kvittonummer" + rentedId);
         studioLoginPage.insertAdjacentHTML("afterbegin", "<div> Tack för att du har lånat en film. Ange följande id när du vill lämna tillbaks din film + 'rentedId'</div>")
     }
-    function show() {
-        //tacka för att filmen har hyrts ut
-    }
-
 
 
     // ------------ ADMIN: --------------------------

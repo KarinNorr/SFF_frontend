@@ -38,6 +38,7 @@ footer{
     font-size: 15 px;
     padding: 20px;
     height: auto;
+    text-align: left;
 }
 .space{
     height: 40px;
@@ -57,4 +58,9 @@ footer{
     background-color:rgb(233, 129, 181);
     font-size: 20px;
     color: white;
+}
+.picture
+{
+    width: 150px;
+    
 }
