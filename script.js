@@ -182,13 +182,11 @@ loginButton.addEventListener("click", function () {
             console.log(json);
 
             for (i = 0; i < json.length; i++) {
-                if (getUser == json[i].name && userPassword == json[i].password) {
+                if (getUser == json[i].name && userPassword == json[i].password && json[i].verified == true) {
                     console.log("Ja det stämmer");
                     localStorage.setItem("userId", i);
                     localStorage.setItem("userId", getUser);
                     console.log(localStorage.getItem("userId"));
-                    // studioLoginPage.innerHTML = "";
-                    // studioLoginPage.innerHTML = "Hej och välkommen " + getUser;
 
                     studioId = json[i].id;
                     welcomeStudio();
@@ -215,20 +213,21 @@ loginButton.addEventListener("click", function () {
             var movieId = document.getElementById("movieInput").value;
             console.log("FilmId: " + movieId);
             console.log("StudioId: " + studioId);
-            addRentedMovie(movieId, studioId);
+            addRentedMovie(Number(movieId), studioId);
         });
-        studioLoginPage.insertAdjacentHTML("beforeend", "<div>Skriv in din Triva här:</input></div>");
-        studioLoginPage.insertAdjacentHTML("beforeend", "<div><input type='text' id='triviaInput'></input><Button id='inputTrivia'>Skicka in!</Button></div>");
+        studioLoginPage.insertAdjacentHTML("beforeend", "<div>Skriv in din Triva här:   Film-Id här:</div>");
+        studioLoginPage.insertAdjacentHTML("beforeend", "<div><input type='text' id='triviaInput'></input><input type='text' id='triviaMovieId'></input><Button id='inputTrivia'>Skicka in!</Button></div>");
         studioLoginPage.insertAdjacentHTML("beforeend", "<div>Lämna tillbaks film nedan:</input></div>");
         studioLoginPage.insertAdjacentHTML("beforeend", "<div><input type='text' id='triviaInput'></input><Button id='returnMovie'>Lämna tillbaks!</Button></div>");
 
 
         let triviaButton = document.getElementById("inputTrivia");
         triviaButton.addEventListener("click", function () {
+            let movieId = document.getElementById("triviaMovieId").value;
             let triviaText = document.getElementById("triviaInput").value;
             console.log("eventlistener triviaButton");
             console.log(triviaText);
-            addTrivia(filmId, text);
+            addTrivia(Number(movieId), triviaText);
         })
         //Button med eventlistener som startar:
         //addRentedMovie(MovieId)
@@ -276,15 +275,15 @@ loginButton.addEventListener("click", function () {
     };
 
     function addTrivia(filmid, text) {
+        console.log("addTrivia");
         var data = { filmid: filmid, trivia: text };
         fetch('https://localhost:5001/api/filmtrivia', {
+            method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                method: 'POST',
             },
-                body: JSON.stringify(
-                    data),
-            })
+            body: JSON.stringify(data),
+        })
             .then(response => response.json())
             .then(data => {
                 console.log('sucsess:', data);
