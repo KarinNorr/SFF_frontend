@@ -154,6 +154,7 @@ function fetchTriviaOfMovie(movieId) {
 }
 
 // ------------ STUDIO: --------------------------
+//------------------------------------------------
 
 var studioLoginPage = document.getElementById("content");
 if (localStorage.getItem("userId") !== "null") {
@@ -166,6 +167,7 @@ else {
 //variabel för att hålla koll på inloggad studio
 var studioId;
 var loginButton = document.getElementById("studioLogin");
+var isLoggedin = false;
 
 loginButton.addEventListener("click", function () {
     console.log("Knapp!");
@@ -189,12 +191,11 @@ loginButton.addEventListener("click", function () {
                     console.log(localStorage.getItem("userId"));
 
                     studioId = json[i].id;
+                    isLoggedin = true;
                     welcomeStudio();
                 }
-                else {
-                    //showErrorLoginPage();
-                }
             }
+            if (isLoggedin == false) { showErrorLoginPage(); }
 
         });
 
@@ -253,9 +254,9 @@ loginButton.addEventListener("click", function () {
     }
 
     function showErrorLoginPage() {
-        studioLoginPage.insertAdjacentHTML("beforeend", "<div>Har du glömt ditt lösenord?</div>")
-
+        studioLoginPage.insertAdjacentHTML("beforeend", "<div> Du har angett något fel. Försök igen eller vänta på att ditt medlemsskap bekräftas.</div>")
     }
+
 
 
     function addRentedMovie(movieid, studioid) {
