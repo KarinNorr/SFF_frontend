@@ -219,7 +219,7 @@ loginButton.addEventListener("click", function () {
         studioLoginPage.insertAdjacentHTML("beforeend", "<div>Skriv in din Triva här:   Film-Id här:</div>");
         studioLoginPage.insertAdjacentHTML("beforeend", "<div><input type='text' id='triviaInput'></input><input type='text' id='triviaMovieId'></input><Button id='inputTrivia'>Skicka in!</Button></div>");
         studioLoginPage.insertAdjacentHTML("beforeend", "<div>Lämna tillbaks film nedan:</input></div>");
-        studioLoginPage.insertAdjacentHTML("beforeend", "<div><input type='text' id='triviaInput'></input><Button id='returnMovie'>Lämna tillbaks!</Button></div>");
+        studioLoginPage.insertAdjacentHTML("beforeend", "<div><input type='text' id='returnInput'></input><Button id='returnMovie'>Lämna tillbaks!</Button></div>");
 
 
         let triviaButton = document.getElementById("inputTrivia");
@@ -230,8 +230,14 @@ loginButton.addEventListener("click", function () {
             console.log(triviaText);
             addTrivia(Number(movieId), triviaText);
         })
-        //Button med eventlistener som startar:
-        //addRentedMovie(MovieId)
+       
+        let returnMovieButton = document.getElementById("returnMovie");
+        returnMovieButton.addEventListener("click", function() {
+            console.log("returnMovieEvent startar");
+            let movieId = document.getElementById("returnInput").value;
+            returnMovie(movieId);
+
+        })
 
         //knapp för att logga ut
         //logOutStudio();
@@ -256,8 +262,6 @@ loginButton.addEventListener("click", function () {
     function showErrorLoginPage() {
         studioLoginPage.insertAdjacentHTML("beforeend", "<div> Du har angett något fel. Försök igen eller vänta på att ditt medlemsskap bekräftas.</div>")
     }
-
-
 
     function addRentedMovie(movieid, studioid) {
         var data = { filmId: movieid, studioId: studioid }
@@ -290,6 +294,22 @@ loginButton.addEventListener("click", function () {
                 console.log('sucsess:', data);
             })
     };
+
+    function returnMovie()
+    {
+        //fetch korrekt movie
+        //sätt returned till true
+        //starta vy för att tacka för att filmen är återlämnad
+    }
+
+    function showReturnedMovie()
+    {
+        //tacka för att filmen lämnats tillbaks
+    }
+    function showRentedMovie()
+    {
+        //tacka för att filmen har hyrts ut
+    }
 
 
 
