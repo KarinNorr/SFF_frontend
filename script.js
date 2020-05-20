@@ -293,16 +293,17 @@ loginButton.addEventListener("click", function () {
             method: 'DELETE',
         })
             .then(response => response.json())
+            showReturnedMovie();
     }
 
     function showReturnedMovie() {
 
-        //tacka för att filmen lämnats tillbaks
+        studioLoginPage.insertAdjacentHTML("beforeend", "<div> Tack för att du har lämnat tillbaks din film!</div>")
     }
     function showRentedMovie(rentedMovie) {
         rentedId = rentedMovie.id;
         console.log("Kvittonummer" + rentedId);
-        studioLoginPage.insertAdjacentHTML("afterbegin", "<div> Tack för att du har lånat en film. Ange följande id när du vill lämna tillbaks din film + 'rentedId'</div>")
+        studioLoginPage.insertAdjacentHTML("beforeend", "<div> Tack för att du har lånat en film. Ange följande id när du vill lämna tillbaks din film </div>" +rentedId)
     }
 
 
