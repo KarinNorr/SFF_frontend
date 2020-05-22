@@ -38,7 +38,7 @@ function addNewStudio(name, password) {
         })
 }
 
-showListOfMovies();
+//showListOfMovies();
 
 fetch('https://localhost:5001/api/film')
     .then(function (response) {
@@ -62,12 +62,12 @@ fetch('https://localhost:5001/api/film')
 
 // ------------ MOVIE: --------------------------
 
-function showListOfMovies() {
-    document.getElementById("listOfMovies").innerHTML = "";
-    fetch('https://localhost:5001/api/film')
-        .then(response => response.json())
-        .then(data => buildButtonsOfMovies(data));
-}
+// function showListOfMovies() {
+//     document.getElementById("listOfMovies").innerHTML = "";
+//     fetch('https://localhost:5001/api/film')
+//         .then(response => response.json())
+//         .then(data => buildButtonsOfMovies(data));
+// }
 
 
 function buildButtonsOfMovies(Movies) {
@@ -106,33 +106,40 @@ function buildListOfTriva(Trivias) {
             //newDiv.innerHTML = picture;
             var containerDiv = document.getElementById("listOfMovies");
             containerDiv.appendChild(newDiv);
-            
+
         });
     }
     else {
         document.getElementById("listOfMovies").innerHTML = "Den här filmen har ingen trivia";
-
+        
     }
-    //newDiv.insertAdjacentElement("beforeend", "<div><img src='jpg/film-camera.jpg'></div>");
     getMoviesBack();
+    //newDiv.insertAdjacentElement("beforeend", "<div><img src='jpg/film-camera.jpg'></div>");
+    
 }
+
 
 //för att komma tillbaks till filmerna
 //kolla igenom
 function getMoviesBack() {
 
     var startPage = document.getElementById("listOfMovies");
-    startPage.insertAdjacentHTML("beforeend", "<div><br><Button id='goBack' class ='movieButton'>Tillbaks till filmerna!</Button></div>");
+    startPage.insertAdjacentHTML("afterbegin", "<div><br><Button id='goBack' class ='movieButton'>Tillbaks till filmerna!</Button></div>");
     var goBackButton = document.getElementById("goBack");
 
     goBackButton.addEventListener("click", function () {
-        showListOfMovies();
+        //document.getElementById("listOfMovies").innerHTML = "";
+        startPage.innerHTML = " Tillbaks till filmerna";
+        fetch('https://localhost:5001/api/film')
+            .then(response => response.json())
+            .then(data => buildButtonsOfMovies(data));
+
+        //showListOfMovies();
     });
 
 }
 
-function showPicture()
-{
+function showPicture() {
     movieList.insertAdjacentHTML("beforeend", "<div><img class='picture' src='jpg/film-camera.jpg'></img></div>");
 }
 
@@ -293,7 +300,7 @@ loginButton.addEventListener("click", function () {
             method: 'DELETE',
         })
             .then(response => response.json())
-            showReturnedMovie();
+        showReturnedMovie();
     }
 
     function showReturnedMovie() {
@@ -303,7 +310,7 @@ loginButton.addEventListener("click", function () {
     function showRentedMovie(rentedMovie) {
         rentedId = rentedMovie.id;
         console.log("Kvittonummer" + rentedId);
-        studioLoginPage.insertAdjacentHTML("beforeend", "<div> Tack för att du har lånat en film. Ange följande id när du vill lämna tillbaks din film </div>" +rentedId)
+        studioLoginPage.insertAdjacentHTML("beforeend", "<div> Tack för att du har lånat en film. Ange följande id när du vill lämna tillbaks din film </div>" + rentedId)
     }
 
 
